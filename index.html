@@ -42,47 +42,17 @@
           Inline SVG: simplified shapes, not geographically accurate.
           Only the listed countries are clickable.
         -->
-        <svg
-          id="worldMap"
-          viewBox="0 0 1000 520"
-          role="img"
-          aria-label="World map with clickable countries"
-        >
-          <rect x="0" y="0" width="1000" height="520" class="ocean" />
-
-          <!-- Non-clickable "land masses" background (purely decorative) -->
-          <path
-            class="land"
-            d="M60,120 L380,120 L420,210 L300,320 L90,300 Z
-               M480,140 L750,140 L860,240 L790,330 L520,320 L450,240 Z
-               M760,330 L980,330 L980,470 L740,470 Z"
-          />
-
-          <!-- Clickable countries (very simplified boxes/paths) -->
-          <!-- North America -->
-          <path data-code="CA" class="country" d="M120,145 L280,145 L295,200 L140,210 Z" />
-          <path data-code="US" class="country" d="M145,210 L295,200 L310,260 L160,275 Z" />
-          <path data-code="MX" class="country" d="M190,275 L310,260 L325,300 L220,320 Z" />
-
-          <!-- South America -->
-          <path data-code="BR" class="country" d="M310,315 L400,310 L430,380 L370,430 L300,385 Z" />
-
-          <!-- Europe -->
-          <path data-code="GB" class="country" d="M520,175 L555,175 L560,205 L525,210 Z" />
-          <path data-code="FR" class="country" d="M555,215 L600,215 L605,255 L560,260 Z" />
-          <path data-code="DE" class="country" d="M605,205 L645,205 L650,245 L610,250 Z" />
-          <path data-code="CH" class="country" d="M590,260 L615,260 L618,278 L593,278 Z" />
-          <path data-code="ES" class="country" d="M545,265 L595,265 L590,305 L540,300 Z" />
-          <path data-code="IT" class="country" d="M620,260 L660,265 L655,310 L630,300 Z" />
-
-          <!-- Asia -->
-          <path data-code="IN" class="country" d="M690,275 L735,270 L755,330 L710,350 Z" />
-          <path data-code="CN" class="country" d="M740,220 L850,220 L875,290 L790,320 L735,275 Z" />
-          <path data-code="JP" class="country" d="M885,245 L910,250 L905,295 L880,285 Z" />
-
-          <!-- Australia -->
-          <path data-code="AU" class="country" d="M820,395 L930,395 L945,455 L835,460 Z" />
-        </svg>
+    <main class="layout">
+      <section class="map-panel" aria-label="Interactive world map">
+        <!--
+          World SVG will be injected here dynamically.
+          Only selected countries will be interactive.
+        -->
+        <div
+          id="mapContainer"
+          class="mapHost"
+          aria-label="Interactive world map"
+        ></div>
 
         <p class="hint">
           Tip: Hover a highlighted country, then click to load a recipe.
