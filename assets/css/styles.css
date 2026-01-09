@@ -8,7 +8,10 @@
   --accent: #7aa2ff;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -16,14 +19,19 @@ body {
   color: var(--text);
 }
 
+/* Header */
+
 .site-header {
   padding: 18px 18px 8px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
+
 .site-header h1 {
   margin: 0 0 10px;
   font-size: 22px;
 }
+
+/* Controls */
 
 .controls {
   display: flex;
@@ -33,15 +41,17 @@ body {
 }
 
 .toggle {
-  border: 1px solid rgba(255,255,255,0.12);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   padding: 10px 12px;
   border-radius: 10px;
 }
+
 .toggle legend {
   padding: 0 6px;
   color: var(--muted);
   font-size: 12px;
 }
+
 .toggle label {
   margin-right: 12px;
   cursor: pointer;
@@ -53,13 +63,16 @@ body {
   color: var(--muted);
   font-size: 12px;
 }
+
 .select select {
   padding: 10px 12px;
   border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.12);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   background: var(--panel);
   color: var(--text);
 }
+
+/* Layout */
 
 .layout {
   display: grid;
@@ -68,12 +81,12 @@ body {
   padding: 14px 18px 22px;
 }
 
-.map-panel, .recipe-panel {
+.map-panel,
+.recipe-panel {
   background: var(--panel);
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 14px;
   padding: 12px;
-  overflow: hidden;
 }
 
 .hint {
@@ -82,18 +95,33 @@ body {
   font-size: 13px;
 }
 
-/* SVG styling */
-#worldMap {
+/* Map container */
+
+.mapHost {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.mapHost svg {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 12px;
 }
 
-.ocean { fill: rgba(255,255,255,0.04); }
-.land  { fill: rgba(255,255,255,0.06); }
+/* Optional background layers if present in SVG */
 
-.country {
+.ocean {
+  fill: rgba(255, 255, 255, 0.04);
+}
+
+.land {
+  fill: rgba(255, 255, 255, 0.06);
+}
+
+/* Clickable countries */
+
+#mapContainer .country {
   fill: rgba(122, 162, 255, 0.22);
   stroke: var(--stroke);
   stroke-width: 2;
@@ -101,21 +129,23 @@ body {
   transition: transform 120ms ease, fill 120ms ease;
   transform-origin: center;
 }
-.country:hover {
+
+#mapContainer .country:hover {
   fill: rgba(122, 162, 255, 0.35);
   transform: scale(1.02);
 }
 
-.country.is-selected {
-  outline: none;
+#mapContainer .country.is-selected {
   fill: rgba(122, 162, 255, 0.5);
-  stroke: rgba(255,255,255,0.5);
+  stroke: rgba(255, 255, 255, 0.5);
 }
 
 /* Recipe card */
+
 .recipe-card {
   padding: 12px;
 }
+
 .placeholder {
   margin: 0;
   color: var(--muted);
@@ -125,6 +155,7 @@ body {
   margin: 0 0 6px;
   font-size: 20px;
 }
+
 .recipe-desc {
   margin: 0 0 12px;
   color: var(--muted);
@@ -134,36 +165,45 @@ body {
 .recipe-image {
   width: 100%;
   border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.10);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   display: block;
 }
+
 .image-credit {
   margin: 8px 0 14px;
   font-size: 12px;
   color: var(--muted);
 }
+
 .image-credit a {
   color: var(--accent);
   text-decoration: none;
 }
-.image-credit a:hover { text-decoration: underline; }
+
+.image-credit a:hover {
+  text-decoration: underline;
+}
 
 .recipe-section h3 {
   margin: 14px 0 8px;
   font-size: 14px;
   color: var(--text);
 }
-.recipe-section ul, .recipe-section ol {
+
+.recipe-section ul,
+.recipe-section ol {
   margin: 0;
   padding-left: 18px;
   color: var(--text);
 }
+
 .recipe-section li {
   margin: 6px 0;
   line-height: 1.35;
 }
 
 /* Responsive */
+
 @media (max-width: 900px) {
   .layout {
     grid-template-columns: 1fr;
