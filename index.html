@@ -50,6 +50,68 @@
       </section>
 
       <section class="recipe-panel" aria-label="Recipe details">
+        <div class="custom-tools">
+          <button id="customToggleBtn" class="btn" type="button">
+            Custom recipe
+          </button>
+        </div>
+      
+        <form id="customForm" class="custom-form" hidden>
+          <label class="field">
+            <span>Ingredients (comma separated)</span>
+            <textarea
+              id="customIngredients"
+              rows="4"
+              placeholder="eg: rice, onion, garlic, tomato, chickpeas"
+            ></textarea>
+          </label>
+      
+          <div class="row">
+            <label class="field">
+              <span>Diet</span>
+              <select id="customDiet">
+                <option value="veg" selected>Veg</option>
+                <option value="nonveg">Non veg</option>
+              </select>
+            </label>
+      
+            <label class="field">
+              <span>Style</span>
+              <select id="customStyle">
+                <option value="auto" selected>Auto</option>
+                <option value="stirfry">Stir-fry</option>
+                <option value="curry">Curry</option>
+                <option value="pasta">Pasta</option>
+                <option value="salad">Salad</option>
+                <option value="soup">Soup</option>
+                <option value="wrap">Wrap</option>
+              </select>
+            </label>
+      
+            <label class="field">
+              <span>Spice</span>
+              <select id="customSpice">
+                <option value="mild" selected>Mild</option>
+                <option value="medium">Medium</option>
+                <option value="hot">Hot</option>
+              </select>
+            </label>
+          </div>
+      
+          <div class="row">
+            <button id="customGenerateBtn" class="btn primary" type="submit">
+              Generate
+            </button>
+            <button id="customClearBtn" class="btn" type="button">
+              Clear
+            </button>
+          </div>
+      
+          <p class="small-note">
+            Offline generator. No internet or API keys needed.
+          </p>
+        </form>
+      
         <div id="recipeCard" class="recipe-card">
           <p class="placeholder">Select a country to see a recipe.</p>
         </div>
