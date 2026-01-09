@@ -1,28 +1,24 @@
 /*
   assets/js/app.js
 
-  - Loads external SVG world map into #mapContainer
-  - Ensures the full map is shown (prevents cropping)
-    - Forces preserveAspectRatio to "xMidYMid meet"
-    - Removes clip-path attributes if the SVG uses clipping rectangles
+  - Loads external SVG into #mapContainer
   - Makes only selected countries clickable
   - Shows tooltip (country name) on hover
   - Loads recipes from data/recipes.json
-  - Filters by diet (veg/nonveg) + language
-  - Renders the first matching recipe in the right panel
+  - Filters by diet + language
+  - Renders the first matching recipe
 */
 
 const RECIPES_URL = "data/recipes.json";
-const WORLD_SVG_URL = "assets/world.svg"; // make sure your svg is saved at this path
+const WORLD_SVG_URL = "assets/world.svg"; // <-- FIXED to match your file location
 
-// Only these countries should be interactive
 const ACTIVE_CODES = new Set([
-  "US", "CA", "MX", "BR", "GB", "FR", "DE", "ES", "IT", "CH", "ET", "IN", "CN", "JP", "AU"
+  "US", "CH", "CA", "MX", "BR", "GB", "FR", "DE", "ES", "IT", "IN", "CN", "JP", "AU"
 ]);
 
-// ISO code -> display name for tooltip
 const COUNTRY_NAMES = {
   US: "United States",
+  CH: "Switzerland",
   CA: "Canada",
   MX: "Mexico",
   BR: "Brazil",
@@ -31,15 +27,12 @@ const COUNTRY_NAMES = {
   DE: "Germany",
   ES: "Spain",
   IT: "Italy",
-  CH: "Switzerland",
-  ET: "Ethiopia",
   IN: "India",
   CN: "China",
   JP: "Japan",
   AU: "Australia"
 };
 
-// UI translations (headings and messages)
 const UI_TEXT = {
   en: {
     pickCountry: "Select a country to see a recipe.",
@@ -74,9 +67,7 @@ const UI_TEXT = {
 let recipesCache = null;
 let tooltipEl = null;
 
-/* -----------------------------
-   Helpers: controls + i18n
------------------------------- */
+/* Helpers */
 
 function getSelectedDiet() {
   const checked = document.querySelector('input[name="diet"]:checked');
@@ -109,9 +100,7 @@ function getLocalizedArray(arrValue) {
   return Array.isArray(arrValue) ? arrValue : [];
 }
 
-/* -----------------------------
-   Recipes loading + rendering
------------------------------- */
+/* Recipes loading + rendering */
 
 async function loadRecipes() {
   if (recipesCache) return recipesCache;
@@ -125,7 +114,7 @@ async function loadRecipes() {
 }
 
 function normalizeRecipes(raw) {
-  // Format A: { "US": { "veg": [...], "nonveg": [...] }, ... }
+  // Format A: { "US": { "veg": [..], "nonveg": [..] } }
   if (raw && !Array.isArray(raw) && typeof raw === "object") {
     const out = [];
     Object.keys(raw).forEach((code) => {
@@ -153,7 +142,7 @@ function normalizeRecipes(raw) {
     return out;
   }
 
-  // Format B: [ { countryCode:"US", type:"veg", ... }, ... ]
+  // Format B: [ { countryCode:"US", type:"veg", ... } ]
   if (Array.isArray(raw)) return raw;
 
   return [];
@@ -223,9 +212,7 @@ function escapeHtml(text) {
     .replaceAll("'", "&#039;");
 }
 
-/* -----------------------------
-   Map loading + interactivity
------------------------------- */
+/* Map loading + interactivity */
 
 async function loadWorldSvg() {
   const res = await fetch(WORLD_SVG_URL, { cache: "no-store" });
@@ -245,18 +232,6 @@ async function loadWorldSvg() {
   svg.setAttribute("role", "img");
   svg.setAttribute("aria-label", "World map with clickable countries");
 
-  // Keep SVG responsive (do not change viewBox, do not shift)
-  svg.removeAttribute("width");
-  svg.removeAttribute("height");
-
-  // Prevent cropping: fit entire viewBox inside container
-  svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
-
-  // If the SVG uses clipping rectangles, remove them so the full map can show
-  svg.querySelectorAll("[clip-path]").forEach((el) => {
-    el.removeAttribute("clip-path");
-  });
-
   setupTooltip();
   setupCountryInteractivity(svg);
 }
@@ -266,6 +241,7 @@ function setupCountryInteractivity(svg) {
 
   candidates.forEach((el) => {
     const code = (el.id || "").trim();
+
     if (!ACTIVE_CODES.has(code)) return;
 
     el.classList.add("country");
@@ -326,9 +302,7 @@ async function handleCountrySelect(countryEl) {
   renderRecipe(match);
 }
 
-/* -----------------------------
-   Tooltip
------------------------------- */
+/* Tooltip */
 
 function setupTooltip() {
   if (tooltipEl) return;
@@ -367,9 +341,7 @@ function hideTooltip() {
   tooltipEl.hidden = true;
 }
 
-/* -----------------------------
-   Controls rerender behavior
------------------------------- */
+/* Controls rerender behavior */
 
 function attachControlHandlers() {
   document.querySelectorAll('input[name="diet"]').forEach((el) => {
@@ -391,9 +363,7 @@ async function rerenderSelectedCountry() {
   await handleCountrySelect(selected);
 }
 
-/* -----------------------------
-   Init
------------------------------- */
+/* Init */
 
 async function init() {
   renderPlaceholder();
