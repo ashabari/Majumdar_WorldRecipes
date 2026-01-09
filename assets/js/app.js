@@ -234,6 +234,7 @@ async function loadWorldSvg() {
 
   setupTooltip();
   setupCountryInteractivity(svg);
+  attachMapZoomControls();
 }
 
 function setupCountryInteractivity(svg) {
@@ -543,6 +544,41 @@ function capitalize(s) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+function attachMapZoomControls() {
+  const container = document.getElementById("mapContainer");
+  if (!container) return;
+
+  const svg = container.querySelector("svg");
+  if (!svg) return;
+
+  const zoomInBtn = document.getElementById("zoomInBtn");
+  const zoomOutBtn = document.getElementById("zoomOutBtn");
+  const zoomResetBtn = document.getElementById("zoomResetBtn");
+
+  let scale = 1;
+
+  function applyZoom() {
+    svg.style.transformOrigin = "0 0";
+    svg.style.transform = `scale(${scale})`;
+  }
+
+  zoomInBtn?.addEventListener("click", () => {
+    scale = Math.min(3, scale + 0.25);
+    applyZoom();
+  });
+
+  zoomOutBtn?.addEventListener("click", () => {
+    scale = Math.max(1, scale - 0.25);
+    applyZoom();
+  });
+
+  zoomResetBtn?.addEventListener("click", () => {
+    scale = 1;
+    applyZoom();
+    container.scrollTop = 0;
+    container.scrollLeft = 0;
+  });
+}
 
 /* Init */
 
