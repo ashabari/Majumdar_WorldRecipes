@@ -1,41 +1,681 @@
-[
-  {
-    "id": "ch-001",
-    "countryCode": "CH",
-    "type": "veg",
-    "title": "Swiss Rösti (Veg)",
-    "description": "Crispy pan-fried potato rösti, simple and comforting.",
-    "ingredients": ["2 large potatoes", "1 tbsp butter or oil", "Salt", "Optional: onion"],
-    "steps": [
-      "Parboil potatoes, cool, then grate.",
-      "Season with salt (and onion if using).",
-      "Pan-fry on medium heat until golden on both sides."
+{
+  "US": {
+    "veg": [
+      {
+        "title": { "en": "Apple Pie", "de": "Apfelkuchen", "fr": "Tarte aux pommes", "it": "Torta di mele" },
+        "description": {
+          "en": "A classic American dessert with spiced apples in a flaky crust.",
+          "de": "Ein klassisches Dessert mit gewürzten Äpfeln in knusprigem Teig.",
+          "fr": "Un dessert classique avec des pommes épicées dans une pâte croustillante.",
+          "it": "Un classico dessert con mele speziate in una pasta friabile."
+        },
+        "ingredients": {
+          "en": [
+            "Pie crust (store-bought or homemade)",
+            "Apples (6 to 8), sliced",
+            "Sugar",
+            "Cinnamon",
+            "Butter",
+            "Lemon juice"
+          ]
+        },
+        "steps": {
+          "en": [
+            "Preheat oven to 190°C.",
+            "Mix sliced apples with sugar, cinnamon, and lemon juice.",
+            "Fill crust with apple mixture, dot with butter, cover with top crust.",
+            "Bake until golden and bubbly, about 45 to 55 minutes.",
+            "Cool before slicing."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Apple%20pie.jpg",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Apple_pie.jpg",
+        "imageSourceName": "Wikimedia Commons"
+      }
+    ],
+    "nonveg": [
+      {
+        "title": { "en": "Hamburger", "de": "Hamburger", "fr": "Hamburger", "it": "Hamburger" },
+        "description": {
+          "en": "A juicy beef patty served in a bun with classic toppings.",
+          "de": "Ein saftiges Rindfleisch-Patty im Brötchen mit klassischen Toppings.",
+          "fr": "Un steak haché juteux dans un pain avec des garnitures classiques.",
+          "it": "Un succoso hamburger di manzo in un panino con condimenti classici."
+        },
+        "ingredients": {
+          "en": ["Ground beef", "Salt", "Pepper", "Buns", "Lettuce", "Tomato", "Onion", "Cheese (optional)"]
+        },
+        "steps": {
+          "en": [
+            "Form beef into patties and season with salt and pepper.",
+            "Sear or grill 3 to 5 minutes per side (depending on thickness).",
+            "Toast buns lightly.",
+            "Assemble with toppings and serve."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Hamburger_.jpg",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Hamburger_.jpg",
+        "imageSourceName": "Wikimedia Commons"
+      }
     ]
   },
-  {
-    "id": "in-001",
-    "countryCode": "IN",
-    "type": "veg",
-    "title": "Simple Dal (Veg)",
-    "description": "Everyday lentils with spices.",
-    "ingredients": ["1 cup lentils", "3 cups water", "Salt", "Turmeric", "Cumin", "Garlic"],
-    "steps": [
-      "Rinse lentils and boil with water, salt, turmeric.",
-      "Temper cumin and garlic in oil, add to cooked lentils.",
-      "Simmer 5 minutes and serve."
+
+  "CH": {
+    "veg": [
+      {
+        "title": { "en": "Rösti", "de": "Rösti", "fr": "Rösti", "it": "Rösti" },
+        "description": {
+          "en": "Swiss crispy potato cake, perfect with eggs or salad.",
+          "de": "Schweizer Kartoffelrösti, knusprig und goldbraun.",
+          "fr": "Galette de pommes de terre suisse, croustillante et dorée.",
+          "it": "Tortino svizzero di patate, croccante e dorato."
+        },
+        "ingredients": { "en": ["Potatoes", "Butter or oil", "Salt"] },
+        "steps": {
+          "en": [
+            "Parboil potatoes, cool, then grate.",
+            "Season with salt.",
+            "Pan-fry in butter/oil, press into a cake.",
+            "Cook until crisp, flip, and crisp the other side."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/R%C3%B6sti.jpg",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:R%C3%B6sti.jpg",
+        "imageSourceName": "Wikimedia Commons"
+      }
+    ],
+    "nonveg": [
+      {
+        "title": {
+          "en": "Zürcher Geschnetzeltes",
+          "de": "Zürcher Geschnetzeltes",
+          "fr": "Émincé à la zurichoise",
+          "it": "Spezzatino alla zurighese"
+        },
+        "description": {
+          "en": "Creamy sliced veal (or meat) in a Zurich-style sauce, often served with rösti.",
+          "de": "Kalbsgeschnetzeltes in Rahmsauce nach Zürcher Art, oft mit Rösti.",
+          "fr": "Émincé à la crème façon Zurich, souvent servi avec des rösti.",
+          "it": "Carne a striscioline in salsa cremosa stile Zurigo, spesso con rösti."
+        },
+        "ingredients": { "en": ["Veal strips (or chicken)", "Mushrooms", "Onion", "Cream", "Stock", "Butter", "Salt", "Pepper"] },
+        "steps": {
+          "en": [
+            "Sauté onion and mushrooms in butter.",
+            "Quickly sear meat strips, then remove.",
+            "Deglaze with stock, add cream, simmer briefly.",
+            "Return meat, warm through, season and serve."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Z%C3%BCrcher%20Geschnetzeltes.jpg",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Z%C3%BCrcher_Geschnetzeltes.jpg",
+        "imageSourceName": "Wikimedia Commons"
+      }
     ]
   },
-  {
-    "id": "jp-001",
-    "countryCode": "JP",
-    "type": "nonveg",
-    "title": "Chicken Teriyaki (Non-veg)",
-    "description": "Quick pan-seared chicken with a sweet savory glaze.",
-    "ingredients": ["Chicken thighs", "Soy sauce", "Mirin", "Sugar", "Ginger"],
-    "steps": [
-      "Sear chicken until cooked.",
-      "Add soy, mirin, sugar, ginger.",
-      "Reduce sauce until glossy and coats chicken."
+
+  "CA": {
+    "veg": [
+      {
+        "title": { "en": "Nanaimo Bar", "de": "Nanaimo-Bar", "fr": "Barre Nanaimo", "it": "Barre Nanaimo" },
+        "description": {
+          "en": "No-bake layered dessert bar from Canada.",
+          "de": "No-Bake Schichtdessert aus Kanada.",
+          "fr": "Dessert canadien en couches, sans cuisson.",
+          "it": "Dolce canadese a strati, senza cottura."
+        },
+        "ingredients": { "en": ["Crumb base (cookies)", "Cocoa", "Butter", "Custard-style filling", "Chocolate topping"] },
+        "steps": {
+          "en": [
+            "Press crumb base into a pan and chill.",
+            "Spread filling layer and chill again.",
+            "Top with melted chocolate and set.",
+            "Slice into bars."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Nanaimo%20bar.JPG",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Nanaimo_bar.JPG",
+        "imageSourceName": "Wikimedia Commons"
+      }
+    ],
+    "nonveg": [
+      {
+        "title": { "en": "Poutine", "de": "Poutine", "fr": "Poutine", "it": "Poutine" },
+        "description": {
+          "en": "Fries topped with cheese curds and gravy, a Canadian comfort food.",
+          "de": "Pommes mit Käsebruch und Sauce, kanadisches Comfort Food.",
+          "fr": "Frites avec fromage en grains et sauce, un classique canadien.",
+          "it": "Patatine con cagliata di formaggio e salsa, comfort food canadese."
+        },
+        "ingredients": { "en": ["French fries", "Cheese curds", "Gravy"] },
+        "steps": {
+          "en": [
+            "Cook fries until crisp.",
+            "Warm gravy.",
+            "Layer fries, add cheese curds, pour hot gravy over and serve."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Poutine.JPG",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Poutine.JPG",
+        "imageSourceName": "Wikimedia Commons"
+      }
+    ]
+  },
+
+  "MX": {
+    "veg": [
+      {
+        "title": { "en": "Guacamole", "de": "Guacamole", "fr": "Guacamole", "it": "Guacamole" },
+        "description": {
+          "en": "Creamy avocado dip with lime and salt, great with tortilla chips.",
+          "de": "Cremiger Avocado-Dip mit Limette und Salz.",
+          "fr": "Dip d’avocat crémeux avec citron vert et sel.",
+          "it": "Crema di avocado con lime e sale."
+        },
+        "ingredients": { "en": ["Avocados", "Lime juice", "Salt", "Onion (optional)", "Tomato (optional)", "Cilantro (optional)"] },
+        "steps": {
+          "en": [
+            "Mash avocados in a bowl.",
+            "Mix in lime juice and salt.",
+            "Add optional chopped onion/tomato/cilantro.",
+            "Serve fresh."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Guacamole.jpg",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Guacamole.jpg",
+        "imageSourceName": "Wikimedia Commons"
+      }
+    ],
+    "nonveg": [
+      {
+        "title": { "en": "Tacos al Pastor", "de": "Tacos al Pastor", "fr": "Tacos al Pastor", "it": "Tacos al Pastor" },
+        "description": {
+          "en": "Marinated pork tacos with pineapple, a street-food favorite.",
+          "de": "Marinierte Schweinefleisch-Tacos mit Ananas.",
+          "fr": "Tacos de porc mariné avec ananas.",
+          "it": "Tacos di maiale marinato con ananas."
+        },
+        "ingredients": { "en": ["Pork", "Al pastor marinade", "Tortillas", "Pineapple", "Onion", "Cilantro"] },
+        "steps": {
+          "en": [
+            "Marinate pork and cook (grill or pan).",
+            "Warm tortillas.",
+            "Assemble with pork, pineapple, onion, and cilantro."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Tacos%20al%20pastor.jpg",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Tacos_al_pastor.jpg",
+        "imageSourceName": "Wikimedia Commons"
+      }
+    ]
+  },
+
+  "BR": {
+    "veg": [
+      {
+        "title": { "en": "Pão de Queijo", "de": "Pão de Queijo", "fr": "Pão de Queijo", "it": "Pão de Queijo" },
+        "description": {
+          "en": "Brazilian cheese bread, chewy inside and crisp outside.",
+          "de": "Brasilianische Käsebrötchen, innen weich und außen knusprig.",
+          "fr": "Petits pains au fromage brésiliens, moelleux et croustillants.",
+          "it": "Panini al formaggio brasiliani, morbidi e croccanti."
+        },
+        "ingredients": { "en": ["Tapioca flour", "Eggs", "Milk", "Oil", "Cheese", "Salt"] },
+        "steps": {
+          "en": [
+            "Mix dough until smooth.",
+            "Shape small balls.",
+            "Bake at 200°C until puffed and golden."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/P%C3%A3o%20de%20queijo.jpg",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:P%C3%A3o_de_queijo.jpg",
+        "imageSourceName": "Wikimedia Commons"
+      }
+    ],
+    "nonveg": [
+      {
+        "title": { "en": "Feijoada", "de": "Feijoada", "fr": "Feijoada", "it": "Feijoada" },
+        "description": {
+          "en": "Brazilian black bean stew often cooked with pork and sausage.",
+          "de": "Brasilianischer Bohneneintopf, oft mit Schwein und Wurst.",
+          "fr": "Ragoût de haricots noirs brésilien, souvent avec porc et saucisse.",
+          "it": "Stufato brasiliano di fagioli neri, spesso con maiale e salsiccia."
+        },
+        "ingredients": { "en": ["Black beans", "Pork/sausage", "Onion", "Garlic", "Bay leaf", "Salt", "Pepper"] },
+        "steps": {
+          "en": [
+            "Soak beans if needed, then simmer until tender.",
+            "Cook meats and aromatics, combine with beans.",
+            "Simmer until flavors meld, serve with rice."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Feijoada.JPG",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Feijoada.JPG",
+        "imageSourceName": "Wikimedia Commons"
+      }
+    ]
+  },
+
+  "GB": {
+    "veg": [
+      {
+        "title": { "en": "Scones", "de": "Scones", "fr": "Scones", "it": "Scones" },
+        "description": {
+          "en": "Tender baked scones, commonly served with jam and cream.",
+          "de": "Lockere Scones, oft mit Marmelade und Clotted Cream.",
+          "fr": "Scones moelleux, servis avec confiture et crème.",
+          "it": "Scones soffici, spesso con marmellata e crema."
+        },
+        "ingredients": { "en": ["Flour", "Baking powder", "Butter", "Milk", "Sugar", "Salt"] },
+        "steps": {
+          "en": [
+            "Mix dry ingredients, rub in butter.",
+            "Add milk, form dough, cut rounds.",
+            "Bake at 200°C until risen and golden."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Scones.JPG",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Scones.JPG",
+        "imageSourceName": "Wikimedia Commons"
+      }
+    ],
+    "nonveg": [
+      {
+        "title": { "en": "Fish and Chips", "de": "Fish and Chips", "fr": "Fish and Chips", "it": "Fish and Chips" },
+        "description": {
+          "en": "Crispy battered fish with thick-cut fries, a UK classic.",
+          "de": "Frittierter Fisch im Backteig mit Pommes, ein UK-Klassiker.",
+          "fr": "Poisson frit en pâte avec frites, un classique britannique.",
+          "it": "Pesce fritto in pastella con patatine, classico del Regno Unito."
+        },
+        "ingredients": { "en": ["White fish fillets", "Batter (flour + liquid)", "Potatoes", "Salt", "Oil for frying"] },
+        "steps": {
+          "en": [
+            "Cut and fry potatoes until golden.",
+            "Coat fish in batter and fry until crisp.",
+            "Season and serve hot."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Fish%20and%20chips.jpg",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Fish_and_chips.jpg",
+        "imageSourceName": "Wikimedia Commons"
+      }
+    ]
+  },
+
+  "FR": {
+    "veg": [
+      {
+        "title": { "en": "Ratatouille", "de": "Ratatouille", "fr": "Ratatouille", "it": "Ratatouille" },
+        "description": {
+          "en": "Provençal vegetable stew with eggplant, zucchini, tomato, and herbs.",
+          "de": "Gemüseragout aus der Provence mit Aubergine, Zucchini und Tomate.",
+          "fr": "Ragoût de légumes provençal avec aubergine, courgette et tomate.",
+          "it": "Stufato di verdure provenzale con melanzane, zucchine e pomodoro."
+        },
+        "ingredients": { "en": ["Eggplant", "Zucchini", "Tomatoes", "Onion", "Garlic", "Olive oil", "Herbs", "Salt"] },
+        "steps": {
+          "en": [
+            "Chop vegetables.",
+            "Sauté aromatics, add vegetables in batches.",
+            "Simmer until tender, season and serve."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Ratatouille.jpg",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Ratatouille.jpg",
+        "imageSourceName": "Wikimedia Commons"
+      }
+    ],
+    "nonveg": [
+      {
+        "title": { "en": "Coq au Vin", "de": "Coq au Vin", "fr": "Coq au vin", "it": "Coq au vin" },
+        "description": {
+          "en": "Chicken braised with wine, mushrooms, and aromatics.",
+          "de": "Huhn in Wein geschmort mit Pilzen und Aromaten.",
+          "fr": "Poulet braisé au vin avec champignons et aromates.",
+          "it": "Pollo brasato al vino con funghi e aromi."
+        },
+        "ingredients": { "en": ["Chicken", "Red wine", "Mushrooms", "Onion", "Garlic", "Bacon (optional)", "Thyme"] },
+        "steps": {
+          "en": [
+            "Brown chicken and aromatics.",
+            "Add wine and simmer gently.",
+            "Add mushrooms near the end, reduce sauce and serve."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Coq%20au%20vin.jpg",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Coq_au_vin.jpg",
+        "imageSourceName": "Wikimedia Commons"
+      }
+    ]
+  },
+
+  "DE": {
+    "veg": [
+      {
+        "title": { "en": "Käsespätzle", "de": "Käsespätzle", "fr": "Spätzle au fromage", "it": "Spätzle al formaggio" },
+        "description": {
+          "en": "Soft egg noodles baked with cheese and onions, a comfort classic.",
+          "de": "Spätzle mit Käse und Zwiebeln, ein klassisches Wohlfühlessen.",
+          "fr": "Spätzle avec fromage et oignons, un plat réconfortant.",
+          "it": "Spätzle con formaggio e cipolle, comfort food."
+        },
+        "ingredients": { "en": ["Spätzle", "Cheese", "Onions", "Butter", "Salt", "Pepper"] },
+        "steps": {
+          "en": [
+            "Cook spätzle and drain.",
+            "Layer with cheese, top with fried onions.",
+            "Warm until cheese melts and serve."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/K%C3%A4sesp%C3%A4tzle.jpg",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:K%C3%A4sesp%C3%A4tzle.jpg",
+        "imageSourceName": "Wikimedia Commons"
+      }
+    ],
+    "nonveg": [
+      {
+        "title": { "en": "Bratwurst", "de": "Bratwurst", "fr": "Bratwurst", "it": "Bratwurst" },
+        "description": {
+          "en": "German grilled sausage, often served with cabbage and potatoes.",
+          "de": "Deutsche Bratwurst, oft mit Kraut und Kartoffeln serviert.",
+          "fr": "Saucisse grillée allemande, souvent avec chou et pommes de terre.",
+          "it": "Salsiccia tedesca alla griglia, spesso con cavolo e patate."
+        },
+        "ingredients": { "en": ["Bratwurst sausages", "Oil", "Mustard (optional)"] },
+        "steps": {
+          "en": [
+            "Pan-sear or grill bratwurst until browned and cooked through.",
+            "Serve hot with mustard and sides."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Bratwurst.jpg",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bratwurst.jpg",
+        "imageSourceName": "Wikimedia Commons"
+      }
+    ]
+  },
+
+  "ES": {
+    "veg": [
+      {
+        "title": { "en": "Gazpacho", "de": "Gazpacho", "fr": "Gaspacho", "it": "Gazpacho" },
+        "description": {
+          "en": "Chilled Spanish tomato soup blended with vegetables and olive oil.",
+          "de": "Kalte spanische Tomatensuppe mit Gemüse und Olivenöl.",
+          "fr": "Soupe froide de tomates espagnole avec légumes et huile d’olive.",
+          "it": "Zuppa fredda spagnola di pomodoro con verdure e olio d’oliva."
+        },
+        "ingredients": { "en": ["Tomatoes", "Cucumber", "Bell pepper", "Garlic", "Olive oil", "Vinegar", "Salt"] },
+        "steps": {
+          "en": [
+            "Blend all ingredients until smooth.",
+            "Chill for at least 1 hour.",
+            "Serve cold with toppings if desired."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Gazpacho.jpg",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Gazpacho.jpg",
+        "imageSourceName": "Wikimedia Commons"
+      }
+    ],
+    "nonveg": [
+      {
+        "title": { "en": "Paella", "de": "Paella", "fr": "Paella", "it": "Paella" },
+        "description": {
+          "en": "Spanish rice dish often cooked with seafood or meat and saffron.",
+          "de": "Spanisches Reisgericht, oft mit Meeresfrüchten oder Fleisch und Safran.",
+          "fr": "Plat de riz espagnol souvent avec fruits de mer ou viande et safran.",
+          "it": "Piatto di riso spagnolo spesso con frutti di mare o carne e zafferano."
+        },
+        "ingredients": { "en": ["Rice", "Stock", "Saffron (optional)", "Seafood/meat", "Vegetables", "Olive oil"] },
+        "steps": {
+          "en": [
+            "Sauté aromatics and vegetables.",
+            "Add rice, then stock and simmer without stirring much.",
+            "Add seafood/meat and cook until done; rest before serving."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Paella.JPG",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Paella.JPG",
+        "imageSourceName": "Wikimedia Commons"
+      }
+    ]
+  },
+
+  "IT": {
+    "veg": [
+      {
+        "title": { "en": "Pizza Margherita", "de": "Pizza Margherita", "fr": "Pizza Margherita", "it": "Pizza Margherita" },
+        "description": {
+          "en": "Classic pizza with tomato, mozzarella, and basil.",
+          "de": "Klassische Pizza mit Tomate, Mozzarella und Basilikum.",
+          "fr": "Pizza classique avec tomate, mozzarella et basilic.",
+          "it": "Pizza classica con pomodoro, mozzarella e basilico."
+        },
+        "ingredients": { "en": ["Pizza dough", "Tomato sauce", "Mozzarella", "Fresh basil", "Olive oil", "Salt"] },
+        "steps": {
+          "en": [
+            "Stretch dough, add sauce and mozzarella.",
+            "Bake hot (as hot as your oven goes) until browned.",
+            "Top with basil and a drizzle of olive oil."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Pizza%20Margherita.jpg",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pizza_Margherita.jpg",
+        "imageSourceName": "Wikimedia Commons"
+      }
+    ],
+    "nonveg": [
+      {
+        "title": { "en": "Spaghetti alla Carbonara", "de": "Spaghetti Carbonara", "fr": "Spaghetti carbonara", "it": "Spaghetti alla carbonara" },
+        "description": {
+          "en": "Creamy pasta made with eggs, cheese, and cured pork.",
+          "de": "Cremige Pasta mit Ei, Käse und gepökeltem Schweinefleisch.",
+          "fr": "Pâtes crémeuses avec œufs, fromage et porc salé.",
+          "it": "Pasta cremosa con uova, formaggio e guanciale/pancetta."
+        },
+        "ingredients": { "en": ["Spaghetti", "Eggs", "Pecorino/Parmesan", "Guanciale or pancetta", "Black pepper"] },
+        "steps": {
+          "en": [
+            "Cook pasta; crisp guanciale/pancetta.",
+            "Mix eggs and cheese.",
+            "Combine hot pasta with pork, remove from heat, add egg mixture and toss quickly."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Spaghetti%20alla%20Carbonara.jpg",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Spaghetti_alla_Carbonara.jpg",
+        "imageSourceName": "Wikimedia Commons"
+      }
+    ]
+  },
+
+  "IN": {
+    "veg": [
+      {
+        "title": { "en": "Dal Fry", "de": "Dal Fry", "fr": "Dal Fry", "it": "Dal Fry" },
+        "description": {
+          "en": "Indian lentil curry tempered with spices, comforting and protein-rich.",
+          "de": "Indisches Linsencurry mit Gewürzen, sättigend und eiweißreich.",
+          "fr": "Curry de lentilles indien aux épices, nourrissant et riche en protéines.",
+          "it": "Curry di lenticchie indiano con spezie, nutriente e proteico."
+        },
+        "ingredients": { "en": ["Lentils", "Onion", "Tomato", "Garlic", "Spices", "Ghee/oil", "Salt"] },
+        "steps": {
+          "en": [
+            "Cook lentils until soft.",
+            "Sauté onion, garlic, spices, add tomato.",
+            "Combine with lentils, simmer, and finish with a spiced tadka if desired."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Dal%20Fry.JPG",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Dal_Fry.JPG",
+        "imageSourceName": "Wikimedia Commons"
+      }
+    ],
+    "nonveg": [
+      {
+        "title": { "en": "Butter Chicken", "de": "Butter Chicken", "fr": "Butter chicken", "it": "Butter chicken" },
+        "description": {
+          "en": "Creamy tomato-based chicken curry, popular in North Indian cuisine.",
+          "de": "Cremiges Hähnchen-Curry in Tomaten-Sahne-Sauce.",
+          "fr": "Curry de poulet crémeux à base de tomate.",
+          "it": "Curry di pollo cremoso al pomodoro."
+        },
+        "ingredients": { "en": ["Chicken", "Tomato puree", "Cream", "Butter", "Garam masala", "Ginger", "Garlic", "Salt"] },
+        "steps": {
+          "en": [
+            "Cook chicken (grill or pan).",
+            "Simmer tomato sauce with spices and butter.",
+            "Add cream, return chicken, simmer briefly and serve."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Butter-chicken.jpg",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Butter-chicken.jpg",
+        "imageSourceName": "Wikimedia Commons"
+      }
+    ]
+  },
+
+  "CN": {
+    "veg": [
+      {
+        "title": { "en": "Vegetable Fried Rice", "de": "Gemüsereis", "fr": "Riz frit aux légumes", "it": "Riso fritto alle verdure" },
+        "description": {
+          "en": "Quick stir-fried rice with vegetables, great for leftovers.",
+          "de": "Schneller gebratener Reis mit Gemüse, perfekt für Reste.",
+          "fr": "Riz sauté rapide aux légumes, idéal pour les restes.",
+          "it": "Riso saltato veloce con verdure, perfetto per gli avanzi."
+        },
+        "ingredients": { "en": ["Cooked rice", "Mixed vegetables", "Soy sauce", "Garlic", "Oil", "Salt"] },
+        "steps": {
+          "en": [
+            "Heat oil, sauté garlic and vegetables.",
+            "Add rice, stir-fry until hot.",
+            "Season with soy sauce and serve."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Fried%20rice.jpg",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Fried_rice.jpg",
+        "imageSourceName": "Wikimedia Commons"
+      }
+    ],
+    "nonveg": [
+      {
+        "title": { "en": "Kung Pao Chicken", "de": "Kung-Pao-Huhn", "fr": "Poulet Kung Pao", "it": "Pollo Kung Pao" },
+        "description": {
+          "en": "Spicy stir-fry with chicken, chilies, and peanuts or cashews.",
+          "de": "Scharfes Pfannengericht mit Huhn, Chili und Nüssen.",
+          "fr": "Sauté épicé au poulet, piments et cacahuètes/noix.",
+          "it": "Saltato piccante con pollo, peperoncini e arachidi/anacardi."
+        },
+        "ingredients": { "en": ["Chicken", "Dried chilies", "Peanuts/cashews", "Soy sauce", "Vinegar", "Garlic", "Ginger"] },
+        "steps": {
+          "en": [
+            "Stir-fry chicken until cooked.",
+            "Add aromatics, chilies, sauce, and nuts.",
+            "Toss quickly and serve with rice."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/KunG%20Pao%20Chicken.jpg",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:KunG_Pao_Chicken.jpg",
+        "imageSourceName": "Wikimedia Commons"
+      }
+    ]
+  },
+
+  "JP": {
+    "veg": [
+      {
+        "title": { "en": "Sushi (Vegetable Rolls)", "de": "Sushi (Gemüserollen)", "fr": "Sushi (rouleaux végétariens)", "it": "Sushi (roll vegetariani)" },
+        "description": {
+          "en": "Simple maki rolls with rice, nori, and vegetable fillings.",
+          "de": "Einfache Maki-Rollen mit Reis, Nori und Gemüse.",
+          "fr": "Maki simples avec riz, algue nori et légumes.",
+          "it": "Maki semplici con riso, nori e verdure."
+        },
+        "ingredients": { "en": ["Sushi rice", "Nori sheets", "Cucumber/avocado", "Rice vinegar", "Salt"] },
+        "steps": {
+          "en": [
+            "Cook and season sushi rice.",
+            "Place nori on a mat, spread rice, add vegetables.",
+            "Roll tightly and slice."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Traditional%20Japanese%20Sushi.jpg",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Traditional_Japanese_Sushi.jpg",
+        "imageSourceName": "Wikimedia Commons"
+      }
+    ],
+    "nonveg": [
+      {
+        "title": { "en": "Ramen", "de": "Ramen", "fr": "Ramen", "it": "Ramen" },
+        "description": {
+          "en": "Japanese noodle soup often served with pork or chicken and a rich broth.",
+          "de": "Japanische Nudelsuppe, oft mit Schwein/Huhn und kräftiger Brühe.",
+          "fr": "Soupe de nouilles japonaise avec bouillon riche, souvent porc/poulet.",
+          "it": "Zuppa di noodles giapponese con brodo ricco, spesso con carne."
+        },
+        "ingredients": { "en": ["Ramen noodles", "Broth", "Toppings (egg, pork/chicken, scallions)", "Soy sauce"] },
+        "steps": {
+          "en": [
+            "Prepare broth and season.",
+            "Cook noodles separately.",
+            "Assemble bowl with noodles, broth, and toppings."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Ramen.jpg",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Ramen.jpg",
+        "imageSourceName": "Wikimedia Commons"
+      }
+    ]
+  },
+
+  "AU": {
+    "veg": [
+      {
+        "title": { "en": "Avocado Toast", "de": "Avocado-Toast", "fr": "Toast à l’avocat", "it": "Toast all’avocado" },
+        "description": {
+          "en": "Café-style toast topped with mashed avocado and seasoning.",
+          "de": "Café-Toast mit zerdrückter Avocado und Gewürzen.",
+          "fr": "Toast façon café garni d’avocat écrasé et assaisonné.",
+          "it": "Toast in stile café con avocado schiacciato e condimento."
+        },
+        "ingredients": { "en": ["Bread", "Avocado", "Salt", "Pepper", "Lemon (optional)", "Chili flakes (optional)"] },
+        "steps": {
+          "en": [
+            "Toast bread.",
+            "Mash avocado with salt, pepper, and optional lemon.",
+            "Spread on toast and finish with toppings."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Avocado%20toast.jpg",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Avocado_toast.jpg",
+        "imageSourceName": "Wikimedia Commons"
+      }
+    ],
+    "nonveg": [
+      {
+        "title": { "en": "Meat Pie", "de": "Fleischpastete", "fr": "Tourte à la viande", "it": "Pasticcio di carne" },
+        "description": {
+          "en": "Savory baked pie filled with meat and gravy, a popular Aussie snack.",
+          "de": "Herzhafte Pastete mit Fleisch und Sauce, beliebter Snack in Australien.",
+          "fr": "Tourte salée garnie de viande et sauce, snack populaire en Australie.",
+          "it": "Torta salata ripiena di carne e salsa, snack popolare in Australia."
+        },
+        "ingredients": { "en": ["Shortcrust pastry", "Meat filling", "Onion", "Gravy", "Salt", "Pepper"] },
+        "steps": {
+          "en": [
+            "Prepare filling and cool slightly.",
+            "Line tin with pastry, fill, top with pastry lid.",
+            "Bake at 200°C until golden."
+          ]
+        },
+        "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/MeatPie.JPG",
+        "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:MeatPie.JPG",
+        "imageSourceName": "Wikimedia Commons"
+      }
     ]
   }
-]
+}
