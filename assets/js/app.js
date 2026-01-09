@@ -363,11 +363,193 @@ async function rerenderSelectedCountry() {
   await handleCountrySelect(selected);
 }
 
+function attachCustomRecipeHandlers() {
+  const toggleBtn = document.getElementById("customToggleBtn");
+  const form = document.getElementById("customForm");
+  const clearBtn = document.getElementById("customClearBtn");
+
+  if (!toggleBtn || !form) return;
+
+  toggleBtn.addEventListener("click", () => {
+    form.hidden = !form.hidden;
+  });
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const recipe = generateCustomRecipeFromForm();
+    renderRecipe(recipe);
+    clearSelectedCountries();
+  });
+
+  if (clearBtn) {
+    clearBtn.addEventListener("click", () => {
+      const ing = document.getElementById("customIngredients");
+      if (ing) ing.value = "";
+      renderPlaceholder();
+      clearSelectedCountries();
+    });
+  }
+}
+
+function generateCustomRecipeFromForm() {
+  const ingredientsText = (document.getElementById("customIngredients")?.value || "").trim();
+  const diet = document.getElementById("customDiet")?.value || "veg";
+  const style = document.getElementById("customStyle")?.value || "auto";
+  const spice = document.getElementById("customSpice")?.value || "mild";
+
+  const ingredients = parseIngredients(ingredientsText);
+  const resolvedStyle = style === "auto" ? chooseStyle(ingredients) : style;
+
+  const { title, description, steps } = buildRecipe(resolvedStyle, ingredients, diet, spice);
+
+  return {
+    id: `custom-${Date.now()}`,
+    countryCode: "CUSTOM",
+    type: diet,
+    title: { en: title, de: title, fr: title, it: title },
+    description: { en: description, de: description, fr: description, it: description },
+    ingredients: {
+      en: ingredients.map(capitalize),
+      de: ingredients.map(capitalize),
+      fr: ingredients.map(capitalize),
+      it: ingredients.map(capitalize)
+    },
+    steps: {
+      en: steps,
+      de: steps,
+      fr: steps,
+      it: steps
+    },
+    imageUrl: "",
+    imageSourceUrl: "",
+    imageSourceName: ""
+  };
+}
+
+function parseIngredients(text) {
+  if (!text) return [];
+  return text
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .slice(0, 18);
+}
+
+function chooseStyle(ingredients) {
+  const has = (k) => ingredients.some((i) => i.toLowerCase().includes(k));
+
+  if (has("pasta") || has("spaghetti") || has("penne") || has("noodle")) return "pasta";
+  if (has("lettuce") || has("spinach") || has("cucumber")) return "salad";
+  if (has("broth") || has("stock") || has("lentil")) return "soup";
+  if (has("tortilla") || has("wrap") || has("bread")) return "wrap";
+  if (has("curry") || has("garam") || has("coconut")) return "curry";
+  return "stirfry";
+}
+
+function buildRecipe(style, ingredients, diet, spice) {
+  const spiceNote =
+    spice === "hot" ? "Make it spicy with chili or hot sauce." :
+    spice === "medium" ? "Add a little chili for a kick." :
+    "Keep spices gentle.";
+
+  const proteinHint = diet === "nonveg"
+    ? "Add a protein like chicken, eggs, or fish if you have it."
+    : "Add chickpeas, tofu, beans, or paneer for protein.";
+
+  const baseTitle = styleName(style);
+  const main = ingredients[0] ? capitalize(ingredients[0]) : "Your ingredients";
+
+  const title = `${baseTitle} with ${main}`;
+  const description = `A quick ${styleName(style).toLowerCase()} built from what you have. ${spiceNote}`;
+
+  const core = ingredients.length ? ingredients : ["oil", "salt", "pepper", "onion"];
+
+  const stepsByStyle = {
+    stirfry: [
+      "Prep ingredients: chop, slice, and pat dry anything wet.",
+      "Heat a pan with oil. Cook aromatics first (onion, garlic, ginger).",
+      `Add the rest: ${listFew(core)}. Stir-fry until cooked.`,
+      "Season with salt, pepper, and optional soy or lemon.",
+      proteinHint,
+      "Serve hot. Finish with herbs or a squeeze of lime."
+    ],
+    curry: [
+      "Saute onion, garlic, and spices in oil until fragrant.",
+      `Add: ${listFew(core)} and stir to coat.`,
+      "Pour in water or coconut milk and simmer 10 to 15 minutes.",
+      proteinHint,
+      "Adjust salt, add chili if desired, and finish with cilantro.",
+      "Serve with rice, bread, or noodles."
+    ],
+    pasta: [
+      "Boil salted water and cook pasta until al dente.",
+      "Saute aromatics in oil. Add chopped vegetables and cook until tender.",
+      `Stir in: ${listFew(core)} and a splash of pasta water to make a sauce.`,
+      proteinHint,
+      "Toss pasta with sauce. Taste and adjust salt and pepper.",
+      "Top with cheese or herbs if you like."
+    ],
+    salad: [
+      "Wash and chop fresh ingredients.",
+      `Combine: ${listFew(core)} in a bowl.`,
+      "Make a dressing: olive oil + lemon (or vinegar) + salt + pepper.",
+      proteinHint,
+      "Toss, taste, and adjust seasoning.",
+      "Serve immediately."
+    ],
+    soup: [
+      "Saute onion, garlic, and spices in a pot.",
+      `Add: ${listFew(core)} and stir for 1 minute.`,
+      "Add broth or water. Simmer until everything is tender.",
+      proteinHint,
+      "Blend partially for thickness if you want.",
+      "Taste, adjust salt, and serve warm."
+    ],
+    wrap: [
+      "Warm your wrap or bread lightly.",
+      "Cook a quick filling in a pan with oil and aromatics.",
+      `Use: ${listFew(core)} for the filling.`,
+      proteinHint,
+      "Add a sauce: yogurt, mayo, or a simple lemon dressing.",
+      "Wrap tightly and serve."
+    ]
+  };
+
+  const steps = stepsByStyle[style] || stepsByStyle.stirfry;
+
+  return { title, description, steps };
+}
+
+function styleName(style) {
+  const names = {
+    stirfry: "Stir-fry",
+    curry: "Curry",
+    pasta: "Pasta",
+    salad: "Salad",
+    soup: "Soup",
+    wrap: "Wrap"
+  };
+  return names[style] || "Recipe";
+}
+
+function listFew(items) {
+  const nice = items.map((s) => s.trim()).filter(Boolean);
+  return nice.slice(0, 6).join(", ") + (nice.length > 6 ? " and more" : "");
+}
+
+function capitalize(s) {
+  const str = String(s || "").trim();
+  if (!str) return "";
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+
 /* Init */
 
 async function init() {
   renderPlaceholder();
   attachControlHandlers();
+  attachCustomRecipeHandlers();
 
   try {
     await loadWorldSvg();
