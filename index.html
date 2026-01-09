@@ -38,6 +38,12 @@
 
     <main class="layout">
       <section class="map-panel" aria-label="Interactive world map">
+        <div class="map-toolbar">
+          <button id="zoomOutBtn" class="btn" type="button">−</button>
+          <button id="zoomResetBtn" class="btn" type="button">Reset</button>
+          <button id="zoomInBtn" class="btn" type="button">+</button>
+        </div>
+
         <div
           id="mapContainer"
           class="mapHost"
@@ -45,7 +51,7 @@
         ></div>
 
         <p class="hint">
-          Tip: Hover a highlighted country, then click to load a recipe.
+          Tip: Scroll to pan, use + / − to zoom, then click a country.
         </p>
       </section>
 
@@ -55,17 +61,17 @@
             Custom recipe
           </button>
         </div>
-      
+
         <form id="customForm" class="custom-form" hidden>
           <label class="field">
             <span>Ingredients (comma separated)</span>
             <textarea
               id="customIngredients"
               rows="4"
-              placeholder="eg: rice, onion, garlic, tomato, chickpeas"
+              placeholder="eg: rice, onion, garlic, tomato"
             ></textarea>
           </label>
-      
+
           <div class="row">
             <label class="field">
               <span>Diet</span>
@@ -74,7 +80,7 @@
                 <option value="nonveg">Non veg</option>
               </select>
             </label>
-      
+
             <label class="field">
               <span>Style</span>
               <select id="customStyle">
@@ -87,7 +93,7 @@
                 <option value="wrap">Wrap</option>
               </select>
             </label>
-      
+
             <label class="field">
               <span>Spice</span>
               <select id="customSpice">
@@ -97,27 +103,23 @@
               </select>
             </label>
           </div>
-      
+
           <div class="row">
-            <button id="customGenerateBtn" class="btn primary" type="submit">
-              Generate
-            </button>
-            <button id="customClearBtn" class="btn" type="button">
-              Clear
-            </button>
+            <button class="btn primary" type="submit">Generate</button>
+            <button id="customClearBtn" class="btn" type="button">Clear</button>
           </div>
-      
+
           <p class="small-note">
             Offline generator. No internet or API keys needed.
           </p>
         </form>
-      
+
         <div id="recipeCard" class="recipe-card">
           <p class="placeholder">Select a country to see a recipe.</p>
         </div>
       </section>
     </main>
 
-    <script src="assets/js/app.js?v=1"></script>
+    <script src="assets/js/app.js?v=2"></script>
   </body>
 </html>
