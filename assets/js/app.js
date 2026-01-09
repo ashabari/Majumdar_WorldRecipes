@@ -2,7 +2,6 @@
   assets/js/app.js
 
   - Loads external SVG into #mapContainer
-  - Shifts the map upward a bit to avoid cropping southern countries
   - Makes only selected countries clickable
   - Shows tooltip (country name) on hover
   - Loads recipes from data/recipes.json
@@ -11,7 +10,7 @@
 */
 
 const RECIPES_URL = "data/recipes.json";
-const WORLD_SVG_URL = "assets/world.svg"; // adjust if your svg is in a different path
+const WORLD_SVG_URL = "assets/world.svg";
 
 // Only these countries should be interactive
 const ACTIVE_CODES = new Set([
@@ -72,9 +71,7 @@ const UI_TEXT = {
 let recipesCache = null;
 let tooltipEl = null;
 
-/* -----------------------------
-   Helpers: controls + i18n
------------------------------- */
+/* Helpers: controls + i18n */
 
 function getSelectedDiet() {
   const checked = document.querySelector('input[name="diet"]:checked');
@@ -107,9 +104,7 @@ function getLocalizedArray(arrValue) {
   return Array.isArray(arrValue) ? arrValue : [];
 }
 
-/* -----------------------------
-   Recipes loading + rendering
------------------------------- */
+/* Recipes loading + rendering */
 
 async function loadRecipes() {
   if (recipesCache) return recipesCache;
@@ -221,31 +216,7 @@ function escapeHtml(text) {
     .replaceAll("'", "&#039;");
 }
 
-/* -----------------------------
-   SVG recenter helper
------------------------------- */
-
-function shiftSvgContent(svg, dy = -30) {
-  const ns = "http://www.w3.org/2000/svg";
-
-  // Wrap all existing children in a group so we can transform them
-  let g = svg.querySelector("g#__shiftGroup");
-  if (!g) {
-    g = document.createElementNS(ns, "g");
-    g.setAttribute("id", "__shiftGroup");
-
-    while (svg.firstChild) {
-      g.appendChild(svg.firstChild);
-    }
-    svg.appendChild(g);
-  }
-
-  g.setAttribute("transform", `translate(0 ${dy})`);
-}
-
-/* -----------------------------
-   Map loading + interactivity
------------------------------- */
+/* Map loading + interactivity */
 
 async function loadWorldSvg() {
   const res = await fetch(WORLD_SVG_URL, { cache: "no-store" });
@@ -265,13 +236,9 @@ async function loadWorldSvg() {
   svg.setAttribute("role", "img");
   svg.setAttribute("aria-label", "World map with clickable countries");
 
-  // Ensure responsive sizing
+  // Keep SVG responsive, but do not change viewBox or shift content
   svg.removeAttribute("width");
   svg.removeAttribute("height");
-  svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
-
-  // Shift map upward slightly (tweak -20, -30, -40)
-  requestAnimationFrame(() => shiftSvgContent(svg, -30));
 
   setupTooltip();
   setupCountryInteractivity(svg);
@@ -282,7 +249,6 @@ function setupCountryInteractivity(svg) {
 
   candidates.forEach((el) => {
     const code = (el.id || "").trim();
-
     if (!ACTIVE_CODES.has(code)) return;
 
     el.classList.add("country");
@@ -343,9 +309,7 @@ async function handleCountrySelect(countryEl) {
   renderRecipe(match);
 }
 
-/* -----------------------------
-   Tooltip
------------------------------- */
+/* Tooltip */
 
 function setupTooltip() {
   if (tooltipEl) return;
@@ -384,9 +348,7 @@ function hideTooltip() {
   tooltipEl.hidden = true;
 }
 
-/* -----------------------------
-   Controls rerender behavior
------------------------------- */
+/* Controls rerender behavior */
 
 function attachControlHandlers() {
   document.querySelectorAll('input[name="diet"]').forEach((el) => {
@@ -408,9 +370,7 @@ async function rerenderSelectedCountry() {
   await handleCountrySelect(selected);
 }
 
-/* -----------------------------
-   Init
------------------------------- */
+/* Init */
 
 async function init() {
   renderPlaceholder();
