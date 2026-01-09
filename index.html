@@ -2,423 +2,102 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Majumdar World Recipes</title>
-
-    <style>
-      :root {
-        --bg: #0b1020;
-        --panel: #121a33;
-        --text: #e9ecff;
-        --muted: #aab3d6;
-
-        /* Map colors */
-        --land: #1b2550;
-        --ocean: #0b1020;
-
-        /* Clickable countries */
-        --country: #2a3b86;
-        --country-hover: #3b55c4;
-        --country-stroke: rgba(255, 255, 255, 0.35);
-      }
-
-      body {
-        margin: 0;
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-        background: var(--bg);
-        color: var(--text);
-      }
-
-      .wrap {
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 20px;
-        display: grid;
-        gap: 16px;
-        grid-template-columns: 1.3fr 1fr;
-      }
-
-      header {
-        grid-column: 1 / -1;
-        display: flex;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 12px;
-      }
-
-      h1 {
-        margin: 0;
-        font-size: 20px;
-      }
-
-      .hint {
-        color: var(--muted);
-        font-size: 14px;
-      }
-
-      .card {
-        background: var(--panel);
-        border-radius: 14px;
-        padding: 14px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-      }
-
-      /* Make the SVG responsive */
-      .map {
-        width: 100%;
-        height: auto;
-        display: block;
-        border-radius: 14px;
-        background: var(--ocean);
-      }
-
-      /* Non-clickable land masses */
-      .land {
-        fill: var(--land);
-        opacity: 0.55;
-      }
-
-      /* Clickable countries */
-      .country {
-        fill: var(--country);
-        stroke: var(--country-stroke);
-        stroke-width: 1;
-        cursor: pointer;
-        transition: transform 120ms ease, fill 120ms ease, opacity 120ms ease;
-        transform-origin: center;
-      }
-
-      .country:hover,
-      .country:focus {
-        fill: var(--country-hover);
-        opacity: 1;
-        transform: scale(1.03);
-        outline: none;
-      }
-
-      .country.is-selected {
-        opacity: 1;
-        fill: #ffd166; /* selection highlight */
-        stroke: rgba(0, 0, 0, 0.35);
-      }
-
-      /* Recipe panel */
-      #recipeTitle {
-        margin: 0 0 8px;
-        font-size: 18px;
-      }
-      #recipeMeta {
-        margin: 0 0 12px;
-        color: var(--muted);
-        font-size: 13px;
-      }
-      #recipeBody {
-        color: var(--text);
-        line-height: 1.5;
-        font-size: 14px;
-      }
-
-      @media (max-width: 900px) {
-        .wrap {
-          grid-template-columns: 1fr;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="assets/css/styles.css" />
   </head>
 
   <body>
-    <div class="wrap">
-      <header>
-        <h1>Majumdar World Recipes</h1>
-        <div class="hint">Click a highlighted country to load a recipe</div>
-      </header>
+    <header class="site-header">
+      <h1>World Recipes</h1>
 
-      <section class="card">
+      <div class="controls" aria-label="Recipe controls">
+        <fieldset class="toggle" aria-label="Diet toggle">
+          <legend>Diet</legend>
+          <label>
+            <input type="radio" name="diet" value="veg" checked />
+            Veg
+          </label>
+          <label>
+            <input type="radio" name="diet" value="nonveg" />
+            Non veg
+          </label>
+        </fieldset>
+
+        <label class="select">
+          <span>Language</span>
+          <select id="languageSelect" aria-label="Language select">
+            <option value="en" selected>English</option>
+            <option value="de">Deutsch</option>
+            <option value="fr">Français</option>
+            <option value="it">Italiano</option>
+          </select>
+        </label>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="map-panel" aria-label="Interactive world map">
         <!--
-          Inline SVG map (stylized).
-          Only specific countries are separate clickable shapes.
-          Each clickable shape has:
-            - class="country"
-            - data-code="CH" (ISO style code)
-            - data-country="Switzerland" (human readable)
+          Inline SVG: simplified shapes, not geographically accurate.
+          Only the listed countries are clickable.
         -->
         <svg
-          class="map"
+          id="worldMap"
           viewBox="0 0 1000 520"
           role="img"
-          aria-label="World map. Click a highlighted country to discover a recipe."
+          aria-label="World map with clickable countries"
         >
-          <!-- Ocean background -->
-          <rect x="0" y="0" width="1000" height="520" fill="var(--ocean)"></rect>
+          <rect x="0" y="0" width="1000" height="520" class="ocean" />
 
-          <!-- Subtle land blobs to give a "world map" look (non-clickable) -->
-          <path class="land" d="M70,155 C130,95 210,85 280,120 C320,140 355,190 330,240 C305,290 220,310 160,285 C90,255 40,205 70,155 Z"></path>
-          <path class="land" d="M320,320 C360,280 430,260 520,275 C590,288 650,320 690,360 C730,402 720,452 675,470 C620,492 535,490 460,472 C382,452 300,392 320,320 Z"></path>
-          <path class="land" d="M580,120 C650,70 740,70 815,105 C880,135 930,190 910,245 C890,305 805,325 740,305 C680,288 610,250 585,205 C565,168 550,145 580,120 Z"></path>
-          <path class="land" d="M780,350 C820,320 875,315 920,340 C965,365 985,410 960,445 C932,482 870,495 820,472 C770,448 742,395 780,350 Z"></path>
+          <!-- Non-clickable "land masses" background (purely decorative) -->
+          <path
+            class="land"
+            d="M60,120 L380,120 L420,210 L300,320 L90,300 Z
+               M480,140 L750,140 L860,240 L790,330 L520,320 L450,240 Z
+               M760,330 L980,330 L980,470 L740,470 Z"
+          />
 
-          <!-- Clickable countries: North America -->
-          <!-- Canada (CA) -->
-          <rect
-            class="country"
-            tabindex="0"
-            x="120" y="110" width="170" height="70"
-            rx="10"
-            data-code="CA"
-            data-country="Canada"
-          ></rect>
+          <!-- Clickable countries (very simplified boxes/paths) -->
+          <!-- North America -->
+          <path data-code="CA" class="country" d="M120,145 L280,145 L295,200 L140,210 Z" />
+          <path data-code="US" class="country" d="M145,210 L295,200 L310,260 L160,275 Z" />
+          <path data-code="MX" class="country" d="M190,275 L310,260 L325,300 L220,320 Z" />
 
-          <!-- United States (US) -->
-          <rect
-            class="country"
-            tabindex="0"
-            x="135" y="185" width="170" height="70"
-            rx="10"
-            data-code="US"
-            data-country="United States"
-          ></rect>
+          <!-- South America -->
+          <path data-code="BR" class="country" d="M310,315 L400,310 L430,380 L370,430 L300,385 Z" />
 
-          <!-- Mexico (MX) -->
-          <rect
-            class="country"
-            tabindex="0"
-            x="170" y="260" width="120" height="45"
-            rx="10"
-            data-code="MX"
-            data-country="Mexico"
-          ></rect>
-
-          <!-- Brazil (BR) -->
-          <rect
-            class="country"
-            tabindex="0"
-            x="260" y="330" width="130" height="95"
-            rx="14"
-            data-code="BR"
-            data-country="Brazil"
-          ></rect>
-
-          <!-- Europe cluster -->
-          <!-- United Kingdom (GB) -->
-          <rect
-            class="country"
-            tabindex="0"
-            x="520" y="150" width="40" height="55"
-            rx="10"
-            data-code="GB"
-            data-country="United Kingdom"
-          ></rect>
-
-          <!-- France (FR) -->
-          <rect
-            class="country"
-            tabindex="0"
-            x="565" y="185" width="55" height="50"
-            rx="10"
-            data-code="FR"
-            data-country="France"
-          ></rect>
-
-          <!-- Germany (DE) -->
-          <rect
-            class="country"
-            tabindex="0"
-            x="625" y="175" width="55" height="55"
-            rx="10"
-            data-code="DE"
-            data-country="Germany"
-          ></rect>
-
-          <!-- Spain (ES) -->
-          <rect
-            class="country"
-            tabindex="0"
-            x="555" y="240" width="60" height="40"
-            rx="10"
-            data-code="ES"
-            data-country="Spain"
-          ></rect>
-
-          <!-- Italy (IT) -->
-          <rect
-            class="country"
-            tabindex="0"
-            x="620" y="240" width="45" height="55"
-            rx="10"
-            data-code="IT"
-            data-country="Italy"
-          ></rect>
-
-          <!-- Switzerland (CH) -->
-          <rect
-            class="country"
-            tabindex="0"
-            x="605" y="210" width="28" height="25"
-            rx="8"
-            data-code="CH"
-            data-country="Switzerland"
-          ></rect>
+          <!-- Europe -->
+          <path data-code="GB" class="country" d="M520,175 L555,175 L560,205 L525,210 Z" />
+          <path data-code="FR" class="country" d="M555,215 L600,215 L605,255 L560,260 Z" />
+          <path data-code="DE" class="country" d="M605,205 L645,205 L650,245 L610,250 Z" />
+          <path data-code="CH" class="country" d="M590,260 L615,260 L618,278 L593,278 Z" />
+          <path data-code="ES" class="country" d="M545,265 L595,265 L590,305 L540,300 Z" />
+          <path data-code="IT" class="country" d="M620,260 L660,265 L655,310 L630,300 Z" />
 
           <!-- Asia -->
-          <!-- India (IN) -->
-          <rect
-            class="country"
-            tabindex="0"
-            x="740" y="275" width="70" height="65"
-            rx="12"
-            data-code="IN"
-            data-country="India"
-          ></rect>
+          <path data-code="IN" class="country" d="M690,275 L735,270 L755,330 L710,350 Z" />
+          <path data-code="CN" class="country" d="M740,220 L850,220 L875,290 L790,320 L735,275 Z" />
+          <path data-code="JP" class="country" d="M885,245 L910,250 L905,295 L880,285 Z" />
 
-          <!-- China (CN) -->
-          <rect
-            class="country"
-            tabindex="0"
-            x="770" y="205" width="120" height="75"
-            rx="14"
-            data-code="CN"
-            data-country="China"
-          ></rect>
-
-          <!-- Japan (JP) -->
-          <rect
-            class="country"
-            tabindex="0"
-            x="905" y="230" width="40" height="60"
-            rx="16"
-            data-code="JP"
-            data-country="Japan"
-          ></rect>
-
-          <!-- Australia (AU) -->
-          <rect
-            class="country"
-            tabindex="0"
-            x="840" y="390" width="120" height="75"
-            rx="16"
-            data-code="AU"
-            data-country="Australia"
-          ></rect>
-
-          <!-- Small labels for clarity (optional) -->
-          <g fill="rgba(255,255,255,0.65)" font-size="12" font-family="system-ui, sans-serif">
-            <text x="140" y="105">NA</text>
-            <text x="545" y="145">EU</text>
-            <text x="780" y="195">AS</text>
-            <text x="850" y="385">AU</text>
-          </g>
+          <!-- Australia -->
+          <path data-code="AU" class="country" d="M820,395 L930,395 L945,455 L835,460 Z" />
         </svg>
+
+        <p class="hint">
+          Tip: Hover a highlighted country, then click to load a recipe.
+        </p>
       </section>
 
-      <aside class="card" aria-live="polite">
-        <h2 id="recipeTitle">Pick a country</h2>
-        <p id="recipeMeta">You will see a recipe here after you click a highlighted country.</p>
-        <div id="recipeBody"></div>
-      </aside>
-    </div>
+      <section class="recipe-panel" aria-label="Recipe details">
+        <div id="recipeCard" class="recipe-card">
+          <p class="placeholder">
+            Select a country to see a recipe.
+          </p>
+        </div>
+      </section>
+    </main>
 
-    <script type="module">
-      /*
-        Minimal, beginner friendly interaction:
-        - Attach click and keyboard handlers to all ".country" shapes
-        - Use data-code to load a recipe from a local JSON file
-        - Highlight the selected country
-      */
-
-      const recipeTitleEl = document.getElementById("recipeTitle");
-      const recipeMetaEl = document.getElementById("recipeMeta");
-      const recipeBodyEl = document.getElementById("recipeBody");
-
-      const countryEls = Array.from(document.querySelectorAll(".country"));
-
-      // Helper: clear selection highlight
-      function clearSelection() {
-        countryEls.forEach((el) => el.classList.remove("is-selected"));
-      }
-
-      // Helper: basic HTML escape to avoid injecting unsafe text
-      function escapeHtml(text) {
-        return String(text)
-          .replaceAll("&", "&amp;")
-          .replaceAll("<", "&lt;")
-          .replaceAll(">", "&gt;")
-          .replaceAll('"', "&quot;")
-          .replaceAll("'", "&#039;");
-      }
-
-      // Load recipes and pick one that matches the country code.
-      // You can later expand this to filter veg/non-veg, random choice, etc.
-      async function loadRecipeByCountry(code) {
-        // This path assumes you create: /data/recipes.json
-        const res = await fetch("./data/recipes.json", { cache: "no-store" });
-        if (!res.ok) throw new Error("Could not load recipes.json");
-
-        const recipes = await res.json();
-
-        // Find the first recipe that matches this country code
-        const match = recipes.find((r) => r.countryCode === code);
-
-        if (!match) {
-          return {
-            title: "No recipe yet",
-            description: `Add a recipe for ${code} in data/recipes.json.`,
-            ingredients: [],
-            steps: []
-          };
-        }
-
-        return match;
-      }
-
-      function renderRecipe(recipe, countryName, code) {
-        recipeTitleEl.textContent = recipe.title || `Recipe (${code})`;
-        recipeMetaEl.textContent = `${countryName} (${code})`;
-
-        const ingredients = (recipe.ingredients || []).map((x) => `<li>${escapeHtml(x)}</li>`).join("");
-        const steps = (recipe.steps || []).map((x) => `<li>${escapeHtml(x)}</li>`).join("");
-
-        recipeBodyEl.innerHTML = `
-          <p>${escapeHtml(recipe.description || "")}</p>
-          <h3 style="margin:14px 0 6px; font-size:14px;">Ingredients</h3>
-          <ul style="margin:0 0 12px 18px; padding:0;">${ingredients || "<li>Coming soon</li>"}</ul>
-          <h3 style="margin:14px 0 6px; font-size:14px;">Steps</h3>
-          <ol style="margin:0 0 0 18px; padding:0;">${steps || "<li>Coming soon</li>"}</ol>
-        `;
-      }
-
-      async function onCountrySelect(el) {
-        const code = el.dataset.code;       // e.g. "CH"
-        const country = el.dataset.country; // e.g. "Switzerland"
-
-        clearSelection();
-        el.classList.add("is-selected");
-
-        recipeTitleEl.textContent = "Loading...";
-        recipeMetaEl.textContent = `${country} (${code})`;
-        recipeBodyEl.textContent = "";
-
-        try {
-          const recipe = await loadRecipeByCountry(code);
-          renderRecipe(recipe, country, code);
-        } catch (err) {
-          recipeTitleEl.textContent = "Something went wrong";
-          recipeMetaEl.textContent = `${country} (${code})`;
-          recipeBodyEl.textContent = String(err.message || err);
-        }
-      }
-
-      // Click support
-      countryEls.forEach((el) => {
-        el.addEventListener("click", () => onCountrySelect(el));
-
-        // Keyboard support: Enter or Space triggers selection
-        el.addEventListener("keydown", (e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            onCountrySelect(el);
-          }
-        });
-      });
-    </script>
+    <script src="assets/js/app.js"></script>
   </body>
 </html>
