@@ -2,7 +2,7 @@
   assets/js/app.js
 
   - Loads external SVG into #mapContainer
-  - Auto-fits the SVG viewBox so countries are not cropped
+  - Shifts the map upward a bit to avoid cropping southern countries
   - Makes only selected countries clickable
   - Shows tooltip (country name) on hover
   - Loads recipes from data/recipes.json
@@ -222,17 +222,17 @@ function escapeHtml(text) {
 }
 
 /* -----------------------------
-   SVG auto-fit to prevent cropping
+   SVG recenter helper
 ------------------------------ */
 
-function fitSvgToContent(svg, padding = 20) {
+function shiftSvgContent(svg, dy = -30) {
   const ns = "http://www.w3.org/2000/svg";
 
-  // Wrap all existing children in a group so we can measure bounds safely
-  let g = svg.querySelector("g#__fitGroup");
+  // Wrap all existing children in a group so we can transform them
+  let g = svg.querySelector("g#__shiftGroup");
   if (!g) {
     g = document.createElementNS(ns, "g");
-    g.setAttribute("id", "__fitGroup");
+    g.setAttribute("id", "__shiftGroup");
 
     while (svg.firstChild) {
       g.appendChild(svg.firstChild);
@@ -240,15 +240,7 @@ function fitSvgToContent(svg, padding = 20) {
     svg.appendChild(g);
   }
 
-  // Measure the bounds and set viewBox
-  const bbox = g.getBBox();
-  const x = bbox.x - padding;
-  const y = bbox.y - padding;
-  const w = bbox.width + padding * 2;
-  const h = bbox.height + padding * 2;
-
-  svg.setAttribute("viewBox", `${x} ${y} ${w} ${h}`);
-  svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+  g.setAttribute("transform", `translate(0 ${dy})`);
 }
 
 /* -----------------------------
@@ -273,12 +265,13 @@ async function loadWorldSvg() {
   svg.setAttribute("role", "img");
   svg.setAttribute("aria-label", "World map with clickable countries");
 
-  // Ensure it resizes nicely
+  // Ensure responsive sizing
   svg.removeAttribute("width");
   svg.removeAttribute("height");
+  svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
 
-  // Fit viewBox after the SVG is in the DOM
-  requestAnimationFrame(() => fitSvgToContent(svg, 25));
+  // Shift map upward slightly (tweak -20, -30, -40)
+  requestAnimationFrame(() => shiftSvgContent(svg, -30));
 
   setupTooltip();
   setupCountryInteractivity(svg);
