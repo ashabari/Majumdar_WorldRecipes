@@ -1,30 +1,21 @@
 /*
   assets/js/app.js
 
-  What this file does:
-  - Loads an external SVG world map into <div id="mapContainer">
+  - Loads external SVG into #mapContainer
   - Makes only selected countries clickable
-  - Shows a tooltip (country name) on hover
+  - Shows tooltip (country name) on hover
   - Loads recipes from data/recipes.json
-  - Filters by diet (veg/nonveg) + language
-  - Renders the first matching recipe in the right panel
-
-  Required files:
-  - index.html contains: <div id="mapContainer" class="mapHost"></div>
-  - assets/maps/world.svg exists and contains per-country shapes (paths) with IDs
-    ideally ISO codes like: US, CA, MX, BR, GB, FR, DE, ES, IT, CH, IN, CN, JP, AU
-  - data/recipes.json matches the structure used here (countryCode + type)
+  - Filters by diet + language
+  - Renders the first matching recipe
 */
 
 const RECIPES_URL = "data/recipes.json";
-const WORLD_SVG_URL = "assets/maps/world.svg";
+const WORLD_SVG_URL = "assets/world.svg"; // <-- FIXED to match your file location
 
-// Only these countries should be interactive
 const ACTIVE_CODES = new Set([
   "US", "CH", "CA", "MX", "BR", "GB", "FR", "DE", "ES", "IT", "IN", "CN", "JP", "AU"
 ]);
 
-// ISO code -> display name for tooltip
 const COUNTRY_NAMES = {
   US: "United States",
   CH: "Switzerland",
@@ -42,7 +33,6 @@ const COUNTRY_NAMES = {
   AU: "Australia"
 };
 
-// Small UI translations (headings and messages)
 const UI_TEXT = {
   en: {
     pickCountry: "Select a country to see a recipe.",
@@ -75,13 +65,9 @@ const UI_TEXT = {
 };
 
 let recipesCache = null;
-
-// Tooltip element (created in JS so you do not have to edit HTML again)
 let tooltipEl = null;
 
-/* -----------------------------
-   Helpers: controls + i18n
------------------------------- */
+/* Helpers */
 
 function getSelectedDiet() {
   const checked = document.querySelector('input[name="diet"]:checked');
@@ -99,7 +85,6 @@ function tUI(key) {
 }
 
 function getLocalizedField(fieldValue) {
-  // fieldValue can be a string OR { en: "...", de: "..." }
   const lang = getSelectedLang();
   if (fieldValue && typeof fieldValue === "object") {
     return fieldValue[lang] || fieldValue.en || "";
@@ -108,7 +93,6 @@ function getLocalizedField(fieldValue) {
 }
 
 function getLocalizedArray(arrValue) {
-  // arrValue can be an array OR { en: [..], de: [..] }
   const lang = getSelectedLang();
   if (arrValue && typeof arrValue === "object" && !Array.isArray(arrValue)) {
     return arrValue[lang] || arrValue.en || [];
@@ -116,9 +100,7 @@ function getLocalizedArray(arrValue) {
   return Array.isArray(arrValue) ? arrValue : [];
 }
 
-/* -----------------------------
-   Recipes loading + rendering
------------------------------- */
+/* Recipes loading + rendering */
 
 async function loadRecipes() {
   if (recipesCache) return recipesCache;
@@ -126,17 +108,13 @@ async function loadRecipes() {
   const res = await fetch(RECIPES_URL, { cache: "no-store" });
   if (!res.ok) throw new Error("Failed to load recipes.json");
 
-  // Support both formats:
-  // A) { "US": { "veg": [..], "nonveg": [..] }, ... }
-  // B) [ { countryCode:"US", type:"veg", ... }, ... ]
   const raw = await res.json();
-
   recipesCache = normalizeRecipes(raw);
   return recipesCache;
 }
 
 function normalizeRecipes(raw) {
-  // Format A: object by country
+  // Format A: { "US": { "veg": [..], "nonveg": [..] } }
   if (raw && !Array.isArray(raw) && typeof raw === "object") {
     const out = [];
     Object.keys(raw).forEach((code) => {
@@ -164,7 +142,7 @@ function normalizeRecipes(raw) {
     return out;
   }
 
-  // Format B: array
+  // Format B: [ { countryCode:"US", type:"veg", ... } ]
   if (Array.isArray(raw)) return raw;
 
   return [];
@@ -234,13 +212,11 @@ function escapeHtml(text) {
     .replaceAll("'", "&#039;");
 }
 
-/* -----------------------------
-   Map loading + interactivity
------------------------------- */
+/* Map loading + interactivity */
 
 async function loadWorldSvg() {
   const res = await fetch(WORLD_SVG_URL, { cache: "no-store" });
-  if (!res.ok) throw new Error("Could not load world.svg");
+  if (!res.ok) throw new Error(`Could not load world.svg at ${WORLD_SVG_URL}`);
 
   const svgText = await res.text();
 
@@ -249,7 +225,6 @@ async function loadWorldSvg() {
 
   container.innerHTML = svgText;
 
-  // Find the inserted SVG
   const svg = container.querySelector("svg");
   if (!svg) throw new Error("world.svg did not contain an <svg> element");
 
@@ -262,31 +237,24 @@ async function loadWorldSvg() {
 }
 
 function setupCountryInteractivity(svg) {
-  // This selector is intentionally broad:
-  // Many world SVGs use <path>, <g>, or <polygon> for countries.
-  // Most importantly, they have an id or a data attribute.
   const candidates = Array.from(svg.querySelectorAll("[id]"));
 
   candidates.forEach((el) => {
     const code = (el.id || "").trim();
 
-    // Some SVGs include many non-country IDs; we only activate our list.
     if (!ACTIVE_CODES.has(code)) return;
 
     el.classList.add("country");
     el.dataset.code = code;
     el.dataset.name = COUNTRY_NAMES[code] || code;
 
-    // Add native SVG tooltip support too
     addSvgTitle(el, el.dataset.name);
 
-    // Click and hover handlers
     el.addEventListener("click", () => handleCountrySelect(el));
     el.addEventListener("mouseenter", () => showTooltip(el));
     el.addEventListener("mouseleave", hideTooltip);
     el.addEventListener("mousemove", moveTooltip);
 
-    // Keyboard accessibility if the element supports it
     el.setAttribute("tabindex", "0");
     el.setAttribute("role", "button");
     el.addEventListener("keydown", (e) => {
@@ -324,7 +292,6 @@ async function handleCountrySelect(countryEl) {
   const diet = getSelectedDiet();
   const recipes = await loadRecipes();
 
-  // Pick the first recipe matching country + diet
   const match = recipes.find((r) => r.countryCode === code && r.type === diet);
 
   if (!match) {
@@ -335,9 +302,7 @@ async function handleCountrySelect(countryEl) {
   renderRecipe(match);
 }
 
-/* -----------------------------
-   Tooltip (country name on hover)
------------------------------- */
+/* Tooltip */
 
 function setupTooltip() {
   if (tooltipEl) return;
@@ -346,8 +311,6 @@ function setupTooltip() {
   tooltipEl.id = "tooltip";
   tooltipEl.hidden = true;
 
-  // Inline styles so you do not have to edit CSS,
-  // but you can move this to styles.css if you prefer.
   tooltipEl.style.position = "fixed";
   tooltipEl.style.zIndex = "9999";
   tooltipEl.style.background = "rgba(10, 15, 30, 0.95)";
@@ -378,17 +341,13 @@ function hideTooltip() {
   tooltipEl.hidden = true;
 }
 
-/* -----------------------------
-   Controls rerender behavior
------------------------------- */
+/* Controls rerender behavior */
 
 function attachControlHandlers() {
-  // When diet changes, re-render current selection
   document.querySelectorAll('input[name="diet"]').forEach((el) => {
     el.addEventListener("change", () => rerenderSelectedCountry());
   });
 
-  // When language changes, re-render recipe text
   const langSel = document.getElementById("languageSelect");
   if (langSel) {
     langSel.addEventListener("change", () => rerenderSelectedCountry());
@@ -404,24 +363,21 @@ async function rerenderSelectedCountry() {
   await handleCountrySelect(selected);
 }
 
-/* -----------------------------
-   Init
------------------------------- */
+/* Init */
 
 async function init() {
   renderPlaceholder();
   attachControlHandlers();
 
   try {
-    // Load SVG first so map is visible
     await loadWorldSvg();
-
-    // Preload recipes so clicks feel instant
     await loadRecipes();
   } catch (err) {
     console.error(err);
     const card = document.getElementById("recipeCard");
-    if (card) card.innerHTML = `<p class="placeholder">Error: ${escapeHtml(err.message || String(err))}</p>`;
+    if (card) {
+      card.innerHTML = `<p class="placeholder">Error: ${escapeHtml(err.message || String(err))}</p>`;
+    }
   }
 }
 
