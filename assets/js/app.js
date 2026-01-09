@@ -1,16 +1,19 @@
 /*
   assets/js/app.js
 
-  - Loads external SVG into #mapContainer
+  - Loads external SVG world map into #mapContainer
+  - Ensures the full map is shown (prevents cropping)
+    - Forces preserveAspectRatio to "xMidYMid meet"
+    - Removes clip-path attributes if the SVG uses clipping rectangles
   - Makes only selected countries clickable
   - Shows tooltip (country name) on hover
   - Loads recipes from data/recipes.json
-  - Filters by diet + language
-  - Renders the first matching recipe
+  - Filters by diet (veg/nonveg) + language
+  - Renders the first matching recipe in the right panel
 */
 
 const RECIPES_URL = "data/recipes.json";
-const WORLD_SVG_URL = "assets/world.svg";
+const WORLD_SVG_URL = "assets/world.svg"; // make sure your svg is saved at this path
 
 // Only these countries should be interactive
 const ACTIVE_CODES = new Set([
@@ -71,7 +74,9 @@ const UI_TEXT = {
 let recipesCache = null;
 let tooltipEl = null;
 
-/* Helpers: controls + i18n */
+/* -----------------------------
+   Helpers: controls + i18n
+------------------------------ */
 
 function getSelectedDiet() {
   const checked = document.querySelector('input[name="diet"]:checked');
@@ -104,7 +109,9 @@ function getLocalizedArray(arrValue) {
   return Array.isArray(arrValue) ? arrValue : [];
 }
 
-/* Recipes loading + rendering */
+/* -----------------------------
+   Recipes loading + rendering
+------------------------------ */
 
 async function loadRecipes() {
   if (recipesCache) return recipesCache;
@@ -216,7 +223,9 @@ function escapeHtml(text) {
     .replaceAll("'", "&#039;");
 }
 
-/* Map loading + interactivity */
+/* -----------------------------
+   Map loading + interactivity
+------------------------------ */
 
 async function loadWorldSvg() {
   const res = await fetch(WORLD_SVG_URL, { cache: "no-store" });
@@ -236,9 +245,17 @@ async function loadWorldSvg() {
   svg.setAttribute("role", "img");
   svg.setAttribute("aria-label", "World map with clickable countries");
 
-  // Keep SVG responsive, but do not change viewBox or shift content
+  // Keep SVG responsive (do not change viewBox, do not shift)
   svg.removeAttribute("width");
   svg.removeAttribute("height");
+
+  // Prevent cropping: fit entire viewBox inside container
+  svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+
+  // If the SVG uses clipping rectangles, remove them so the full map can show
+  svg.querySelectorAll("[clip-path]").forEach((el) => {
+    el.removeAttribute("clip-path");
+  });
 
   setupTooltip();
   setupCountryInteractivity(svg);
@@ -309,7 +326,9 @@ async function handleCountrySelect(countryEl) {
   renderRecipe(match);
 }
 
-/* Tooltip */
+/* -----------------------------
+   Tooltip
+------------------------------ */
 
 function setupTooltip() {
   if (tooltipEl) return;
@@ -348,7 +367,9 @@ function hideTooltip() {
   tooltipEl.hidden = true;
 }
 
-/* Controls rerender behavior */
+/* -----------------------------
+   Controls rerender behavior
+------------------------------ */
 
 function attachControlHandlers() {
   document.querySelectorAll('input[name="diet"]').forEach((el) => {
@@ -370,7 +391,9 @@ async function rerenderSelectedCountry() {
   await handleCountrySelect(selected);
 }
 
-/* Init */
+/* -----------------------------
+   Init
+------------------------------ */
 
 async function init() {
   renderPlaceholder();
