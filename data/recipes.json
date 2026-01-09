@@ -1,0 +1,41 @@
+[
+  {
+    "id": "ch-001",
+    "countryCode": "CH",
+    "type": "veg",
+    "title": "Swiss Rösti (Veg)",
+    "description": "Crispy pan-fried potato rösti, simple and comforting.",
+    "ingredients": ["2 large potatoes", "1 tbsp butter or oil", "Salt", "Optional: onion"],
+    "steps": [
+      "Parboil potatoes, cool, then grate.",
+      "Season with salt (and onion if using).",
+      "Pan-fry on medium heat until golden on both sides."
+    ]
+  },
+  {
+    "id": "in-001",
+    "countryCode": "IN",
+    "type": "veg",
+    "title": "Simple Dal (Veg)",
+    "description": "Everyday lentils with spices.",
+    "ingredients": ["1 cup lentils", "3 cups water", "Salt", "Turmeric", "Cumin", "Garlic"],
+    "steps": [
+      "Rinse lentils and boil with water, salt, turmeric.",
+      "Temper cumin and garlic in oil, add to cooked lentils.",
+      "Simmer 5 minutes and serve."
+    ]
+  },
+  {
+    "id": "jp-001",
+    "countryCode": "JP",
+    "type": "nonveg",
+    "title": "Chicken Teriyaki (Non-veg)",
+    "description": "Quick pan-seared chicken with a sweet savory glaze.",
+    "ingredients": ["Chicken thighs", "Soy sauce", "Mirin", "Sugar", "Ginger"],
+    "steps": [
+      "Sear chicken until cooked.",
+      "Add soy, mirin, sugar, ginger.",
+      "Reduce sauce until glossy and coats chicken."
+    ]
+  }
+]
