@@ -10,7 +10,7 @@
 */
 
 const RECIPES_URL = "data/recipes.json";
-const WORLD_SVG_URL = "assets/world.svg"; // <-- FIXED to match your file location
+const WORLD_SVG_URL = "assets/world.svg"; // matches your file location
 
 const ACTIVE_CODES = new Set([
   "US", "CH", "CA", "MX", "BR", "GB", "FR", "DE", "ES", "IT", "IN", "CN", "JP", "AU"
@@ -287,6 +287,10 @@ async function handleCountrySelect(countryEl) {
   const code = countryEl.dataset.code;
   if (!code) return;
 
+  // Keep dropdown synced with map clicks
+  const dropdown = document.getElementById("countrySelect");
+  if (dropdown) dropdown.value = code;
+
   clearSelectedCountries();
   countryEl.classList.add("is-selected");
 
@@ -357,12 +361,86 @@ function attachControlHandlers() {
 
 async function rerenderSelectedCountry() {
   const selected = document.querySelector("#mapContainer .country.is-selected");
-  if (!selected) {
-    renderPlaceholder();
+
+  // If a country is selected on the map, re-render that
+  if (selected) {
+    await handleCountrySelect(selected);
     return;
   }
-  await handleCountrySelect(selected);
+
+  // If no map selection, but dropdown has a value, render that country
+  const dropdown = document.getElementById("countrySelect");
+  const code = dropdown ? dropdown.value : "";
+  if (code) {
+    await renderFromCountryCode(code);
+    return;
+  }
+
+  renderPlaceholder();
 }
+
+/* Country dropdown (ONLY countries that exist in recipes.json) */
+
+function setupCountryDropdownFromRecipes(recipes) {
+  const sel = document.getElementById("countrySelect");
+  if (!sel) return;
+
+  // Remove any old options except the placeholder
+  sel.querySelectorAll('option:not([value=""])').forEach((o) => o.remove());
+
+  // Build a set of country codes actually present in recipes.json
+  const codesWithRecipes = new Set(
+    (recipes || [])
+      .map((r) => (r.countryCode || "").trim())
+      .filter(Boolean)
+  );
+
+  // Only show countries that you:
+  // - have recipes for
+  // - have a name for in COUNTRY_NAMES
+  const entries = Object.entries(COUNTRY_NAMES)
+    .filter(([code]) => codesWithRecipes.has(code))
+    .sort((a, b) => a[1].localeCompare(b[1]));
+
+  for (const [code, name] of entries) {
+    const opt = document.createElement("option");
+    opt.value = code;
+    opt.textContent = name; // the country name shown in the dropdown
+    sel.appendChild(opt);
+  }
+
+  // Selecting from dropdown loads a recipe (same behavior as clicking a country)
+  sel.addEventListener("change", async () => {
+    const code = sel.value;
+    if (!code) return;
+
+    const el = document.querySelector(`#mapContainer [id="${code}"]`);
+    if (el) {
+      await handleCountrySelect(el);
+      return;
+    }
+
+    await renderFromCountryCode(code);
+  });
+}
+
+async function renderFromCountryCode(code) {
+  clearSelectedCountries();
+
+  const diet = getSelectedDiet();
+  const recipes = await loadRecipes();
+
+  const match = recipes.find((r) => r.countryCode === code && r.type === diet);
+
+  if (!match) {
+    renderMissing();
+    return;
+  }
+
+  renderRecipe(match);
+}
+
+/* Custom recipe (offline) */
 
 function attachCustomRecipeHandlers() {
   const toggleBtn = document.getElementById("customToggleBtn");
@@ -380,6 +458,9 @@ function attachCustomRecipeHandlers() {
     const recipe = generateCustomRecipeFromForm();
     renderRecipe(recipe);
     clearSelectedCountries();
+
+    const dropdown = document.getElementById("countrySelect");
+    if (dropdown) dropdown.value = "";
   });
 
   if (clearBtn) {
@@ -388,6 +469,9 @@ function attachCustomRecipeHandlers() {
       if (ing) ing.value = "";
       renderPlaceholder();
       clearSelectedCountries();
+
+      const dropdown = document.getElementById("countrySelect");
+      if (dropdown) dropdown.value = "";
     });
   }
 }
@@ -544,6 +628,8 @@ function capitalize(s) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+/* Map zoom controls */
+
 function attachMapZoomControls() {
   const container = document.getElementById("mapContainer");
   if (!container) return;
@@ -589,7 +675,10 @@ async function init() {
 
   try {
     await loadWorldSvg();
+
+    // IMPORTANT: load recipes before building the dropdown
     await loadRecipes();
+    setupCountryDropdownFromRecipes(recipesCache);
   } catch (err) {
     console.error(err);
     const card = document.getElementById("recipeCard");
