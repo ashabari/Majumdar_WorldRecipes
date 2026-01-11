@@ -110,6 +110,8 @@ body {
   width: auto;            /* do not force-fit to container */
   height: max-content;            /* ensures there's something to scroll */
   min-height: 800px;
+  min-width: 800px;
+  max-width: 900px;
  
 }
 
