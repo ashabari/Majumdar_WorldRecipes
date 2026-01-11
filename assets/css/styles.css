@@ -109,8 +109,9 @@ body {
   display: block;
   width: auto;            /* do not force-fit to container */
   height: max-content;
-  min-width: 400px;             /* ensures there's something to scroll */
+  min-width: 700px;             /* ensures there's something to scroll */
   min-height: 800px;
+  max-width: 800px;
 }
 
 /* Optional background layers if present in SVG */
