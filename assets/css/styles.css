@@ -109,7 +109,7 @@ body {
   display: block;
   width: auto;            /* do not force-fit to container */
   height: max-content;
-  min-width: 800px;             /* ensures there's something to scroll */
+  min-width: 400px;             /* ensures there's something to scroll */
   min-height: 800px;
 }
 
