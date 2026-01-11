@@ -110,7 +110,7 @@ body {
   width: max-content;            /* do not force-fit to container */
   height: max-content;
   min-width: 1100px;             /* ensures there's something to scroll */
-  min-height: 650px;
+  min-height: 800px;
 }
 
 /* Optional background layers if present in SVG */
