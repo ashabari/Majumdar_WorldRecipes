@@ -107,9 +107,9 @@ body {
 
 .mapHost svg {
   display: block;
-  width: max-content;            /* do not force-fit to container */
+  width: auto;            /* do not force-fit to container */
   height: max-content;
-  min-width: 700px;             /* ensures there's something to scroll */
+  min-width: 1100px;             /* ensures there's something to scroll */
   min-height: 800px;
 }
 
