@@ -99,9 +99,10 @@ body {
 
 .mapHost {
   width: 100%;
-  min-height: 400px;
+  height: 520px;                 /* fixed viewport height so you can scroll */
   border-radius: 12px;
-  overflow: auto;
+  overflow: auto;                /* enable scroll on desktop + mobile */
+  -webkit-overflow-scrolling: touch;
 }
 
 .mapHost svg {
